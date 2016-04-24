@@ -1,0 +1,124 @@
+@inject IOptions<AppSettings> AppSettings
+@inject IHostingEnvironment HostingEnvironment
+<!DOCTYPE html>
+@* lang - The language of the page. *@
+@* no-js - The no JavaScript class is removed by modernizr if JavaScript is available. *@
+<html class="no-js" lang="en">
+<head>
+    @* The order of the tags in the head is important for best performance and compatibility. *@
+    @* charset - The character encoding of the document. *@
+    <meta charset="utf-8">
+    @* viewport - Set the scale on mobile devices (For more info see https://developer.mozilla.org/en/docs/Mozilla/Mobile/Viewport_meta_tag). *@
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    @* title - The title of the page which appears in the browser window title. Aim for the title to be less than 70
+        characters. The site name appears at the end for better SEO. *@
+    <title>@ViewBag.Title - @AppSettings.Value.SiteTitle</title>
+
+
+    @* Icons & Platform Specific Settings (See http://rehansaeed.com/internet-favicon-madness/ for detailed
+        information). The order of these icons is very important. *@
+
+    @* favicon-192x192.png - For Android Chrome M36 to M38 this icon is used. M39+ uses the manifest.json file specified below. *@
+    <link rel="icon" type="image/png" href="/img/icons/favicon-192x192.png" sizes="192x192">
+    @* favicon-16x16.png - The classic favicon, displayed in the tabs. *@
+    <link rel="icon" type="image/png" href="/img/icons/favicon-16x16.png" sizes="16x16">
+
+    @* Windows 7 Taskbar - This depends on your site, so no code here. See http://www.buildmypinnedsite.com/windows7 *@
+
+
+    @* Move site.css to a content delivery network (CDN) for better performance. *@
+    <link asp-append-version="true" rel="stylesheet" href="~/css/site.css" />
+    <meta name="x-font-awesome-stylesheet-fallback-test" class="fa">
+    <environment names="@bs.Constants.EnvironmentName.Development">
+        <link asp-append-version="true" rel="stylesheet" href="~/css/font-awesome.css" />
+    </environment>
+    <environment names="@bs.Constants.EnvironmentName.Staging,@bs.Constants.EnvironmentName.Production">
+        <link rel="stylesheet" href="@ContentDeliveryNetwork.MaxCdn.FontAwesomeUrl" />
+    </environment>
+    <environment names="@bs.Constants.EnvironmentName.Development">
+        <script asp-append-version="true" src="~/js/modernizr.js"></script>
+    </environment>
+    <environment names="@bs.Constants.EnvironmentName.Staging,@bs.Constants.EnvironmentName.Production">
+        <script src="@ContentDeliveryNetwork.Microsoft.ModernizrUrl"></script>
+    </environment>
+
+
+    @* Description - Used by search engines. Aim for more than 160 characters. *@
+    <meta name="description" content="@ViewBag.Description">
+    
+
+    @* Canonical - The URL of the current page. Stops case differences and http/https being treated as different URL's
+        by search engines. The settings in this project should make this redundant, unless you are mixing HTTP and
+        HTTPS or you have multiple URL's to the same resource which you should avoid.
+        (See http://googlewebmastercentral.blogspot.co.uk/2009/02/specify-your-canonical.html). *@
+    @*<link rel="canonical" href="">*@
+
+
+    @* You can use the head section to render additional meta tags. *@
+    @RenderSection("head", required: false)
+</head>
+<body>
+    @* Skip to main content link for people who use screen readers. sr-only makes this only visible to screen readers.
+        See http://a11yproject.com/posts/skip-nav-links/. *@
+    <a href="#main" class="sr-only sr-only-focusable">Skip to main content</a>
+    @* nav - The main navigation for the site. *@
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span aria-hidden="true" class="icon-bar"></span>
+                    <span aria-hidden="true" class="icon-bar"></span>
+                    <span aria-hidden="true" class="icon-bar"></span>
+                </button>
+                <a asp-route="@HomeControllerRoute.GetIndex" class="navbar-brand" role="banner"><span class="fa fa-star"></span> @AppSettings.Value.SiteTitle</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    @if (HostingEnvironment.IsDevelopment())
+                    {
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown"><span aria-hidden="true" class="fa fa-cogs"></span> Debug <span aria-hidden="true" class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                @*<li><a href="/elmah"><span aria-hidden="true" class="fa fa-life-ring"></span> Elmah</a></li>*@
+                                @*<li><a href="/glimpse.axd"><span aria-hidden="true" class="fa fa-line-chart"></span> Glimpse</a></li>*@
+                                <li><a href="/runtimeinfo"><span aria-hidden="true" class="fa fa-info"></span> Runtime Information</a></li>
+                            </ul>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+    @* div id="main" - The main container for the page. Change this to the HTML5 main tag when it gains more browser support. *@
+    <div id="main" class="container body-content" role="main">
+        <!--[if lt IE 8]>
+            <div class="alert alert-warning" role="alert">
+                <p>You are using an outdated browser. Please <a class="alert-link" href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+            </div>
+        <![endif]-->
+        @RenderBody()
+        <hr>
+        <footer role="contentinfo">
+            <p>&copy; @DateTime.Now.Year - @AppSettings.Value.SiteTitle</p>
+        </footer>
+    </div>
+
+
+    <environment names="@bs.Constants.EnvironmentName.Development">
+        <script asp-append-version="true" src="~/js/jquery.js"></script>
+        <script asp-append-version="true" src="~/js/jquery-validate.js"></script>
+        <script asp-append-version="true" src="~/js/jquery-validate-unobtrusive.js"></script>
+        <script asp-append-version="true" src="~/js/bootstrap.js"></script>
+        <script asp-append-version="true" src="~/js/site.js"></script>
+    </environment>
+    <environment names="@bs.Constants.EnvironmentName.Staging,@bs.Constants.EnvironmentName.Production">
+        <script src="@ContentDeliveryNetwork.Google.JQueryUrl"></script>
+        <script src="@ContentDeliveryNetwork.Microsoft.JQueryValidateUrl"></script>
+        <script src="@ContentDeliveryNetwork.Microsoft.JQueryValidateUnobtrusiveUrl"></script>
+        <script src="@ContentDeliveryNetwork.Microsoft.BootstrapUrl"></script>
+        @* Move site.js to a content delivery network (CDN) for better performance. *@
+        <script asp-append-version="true" src="~/js/site.js"></script>
+    </environment>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

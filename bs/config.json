@@ -1,0 +1,26 @@
+{
+  "AppSettings": {
+    "SiteShortTitle": "Boilerplate",
+    "SiteTitle": "ASP.NET MVC Boilerplate"
+  },
+  "Logging": {
+    "IncludeScopes": true,
+    "LogLevel": {
+      "Default": "Verbose",
+      "System": "Information",
+      "Microsoft": "Information"
+    }
+  },
+  "CacheProfileSettings": {
+    "CacheProfiles": {
+      "Error": {
+        "Duration": 86400,
+        "Location": "Any"
+      },
+      "RobotsText": {
+        "Duration": 86400,
+        "Location": "Any"
+      },
+    }
+  }
+}
