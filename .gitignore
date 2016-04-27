@@ -1,4 +1,7 @@
 bs/bower_components/
+bs/wwwroot/fonts/
+bs/wwwroot/css/
+bs/wwwroot/js/
 
 *.sublime-*
 *.min.cshtml
