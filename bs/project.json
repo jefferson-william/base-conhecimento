@@ -1,6 +1,7 @@
 {
   "userSecretsId": "bs-b9efb167-d27d-4f20-a36a-60f83da44c9b",
   "version": "1.0.0-*",
+  "webroot": "wwwroot",
 
   "dependencies": {
     "Boilerplate.Web.Mvc6": "2.0.0-rc1-final-5",
